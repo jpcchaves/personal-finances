@@ -94,6 +94,9 @@ public class Usuario implements UserDetails {
         this.dataInativacao = dataInativacao;
     }
 
+    public List<Titulo> getTitulos() {
+        return titulos;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
