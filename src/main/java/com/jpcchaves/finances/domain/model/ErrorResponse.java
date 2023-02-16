@@ -1,24 +1,24 @@
 package com.jpcchaves.finances.domain.model;
 
 public class ErrorResponse {
-    private String dataHora;
+    private String timestamp;
     private Integer status;
-    private String titulo;
-    private String mensagem;
+    private String title;
+    private String message;
 
-    public ErrorResponse(String dataHora, Integer status, String titulo, String mensagem) {
-        this.dataHora = dataHora;
+    public ErrorResponse(String timestamp, Integer status, String title, String message) {
+        this.timestamp = timestamp;
         this.status = status;
-        this.titulo = titulo;
-        this.mensagem = mensagem;
+        this.title = title;
+        this.message = message;
     }
 
-    public String getDataHora() {
-        return dataHora;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Integer getStatus() {
@@ -29,19 +29,19 @@ public class ErrorResponse {
         this.status = status;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getMensagem() {
-        return mensagem;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
