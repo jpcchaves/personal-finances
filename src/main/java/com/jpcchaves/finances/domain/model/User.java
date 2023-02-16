@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private Date inactivationDate;
 
     @OneToMany(mappedBy = "_user")
-    private List<Titulo> titulos;
+    private List<Title> titles;
 
     public Long getId() {
         return id;
@@ -88,8 +88,8 @@ public class User implements UserDetails {
         this.inactivationDate = inactivationDate;
     }
 
-    public List<Titulo> getTitulos() {
-        return titulos;
+    public List<Title> getTitulos() {
+        return titles;
     }
 
     @Override
