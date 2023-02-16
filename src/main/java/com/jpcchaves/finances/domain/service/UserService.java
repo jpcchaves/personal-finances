@@ -1,5 +1,6 @@
 package com.jpcchaves.finances.domain.service;
 
+import com.jpcchaves.finances.domain.exception.ResourceNotFoundException;
 import com.jpcchaves.finances.domain.model.User;
 import com.jpcchaves.finances.domain.repository.UserRepository;
 import com.jpcchaves.finances.dto.user.UserRequestDto;
@@ -18,6 +19,7 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
 
     @Autowired
     private ModelMapper mapper;
+
     @Override
     public List<UserResponseDto> findAll() {
 
@@ -31,29 +33,36 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
 
     @Override
     public UserResponseDto findById(Long id) {
-        Optional<User> optUsuario = userRepository.findById(id);
+        var entity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id));
 
-        if(optUsuario.isEmpty()){
-            //throw
-            return null;
-        }
-
-        return mapper.map(optUsuario.get(), UserResponseDto.class);
-
+        return mapper.map(entity, UserResponseDto.class);
     }
 
     @Override
     public UserResponseDto create(UserRequestDto dto) {
-        return null;
+
+        User user = mapper.map(dto, User.class);
+        user.setId(null);
+        userRepository.save(user);
+
+        return mapper.map(user, UserResponseDto.class);
+        // todo: encrypt user's password
     }
 
     @Override
     public UserResponseDto update(Long id, UserRequestDto dto) {
-        return null;
+        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id));
+        User user = mapper.map(dto, User.class);
+        // todo: encrypt user's password
+
+        user.setId(id);
+        userRepository.save(user);
+        return mapper.map(user, UserResponseDto.class);
     }
 
     @Override
     public void delete(Long id) {
-
+        findById(id);
+        userRepository.deleteById(id);
     }
 }

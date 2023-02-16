@@ -1,17 +1,24 @@
 package com.jpcchaves.finances.dto.user;
 
-public class UserRequestDto {
-    private String nome;
-    private String email;
-    private String senha;
-    private String foto;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
-    public String getNome() {
-        return nome;
+public class UserRequestDto {
+    private String name;
+    @NotBlank(message = "O email é obrigatório!")
+    private String email;
+    @NotBlank(message = "A senha é obrigatória!")
+    @Length(min = 6, message = "A senha deve ter no mínimo 6 caraceres.")
+    @Length(max = 15, message = "A senha deve ter no máximo 15 caraceres.")
+    private String password;
+    private String photo;
+
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -22,19 +29,19 @@ public class UserRequestDto {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

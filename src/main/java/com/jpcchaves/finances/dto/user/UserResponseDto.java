@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class UserResponseDto {
     private Long id;
-    private String nome;
+    private String name;
     private String email;
-    private String foto;
-    private Date dataInativacao;
+    private String photo;
+    private Date inactivationDate;
 
     public Long getId() {
         return id;
@@ -17,12 +17,12 @@ public class UserResponseDto {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -33,19 +33,19 @@ public class UserResponseDto {
         this.email = email;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public Date getDataInativacao() {
-        return dataInativacao;
+    public Date getInactivationDate() {
+        return inactivationDate;
     }
 
-    public void setDataInativacao(Date dataInativacao) {
-        this.dataInativacao = dataInativacao;
+    public void setInactivationDate(Date inactivationDate) {
+        this.inactivationDate = inactivationDate;
     }
 }
