@@ -1,11 +1,13 @@
 package com.jpcchaves.finances.dto.user;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 public class UserRequestDto {
     private String name;
     @NotBlank(message = "O email é obrigatório!")
+    @Email(message = "Insira um email válido!")
     private String email;
     @NotBlank(message = "A senha é obrigatória!")
     @Length(min = 6, message = "A senha deve ter no mínimo 6 caraceres.")
