@@ -1,8 +1,8 @@
-package com.jpcchaves.finances.dto.usuario;
+package com.jpcchaves.finances.dto.user;
 
 import java.util.Date;
 
-public class UsuarioResponseDto {
+public class UserResponseDto {
     private Long id;
     private String nome;
     private String email;

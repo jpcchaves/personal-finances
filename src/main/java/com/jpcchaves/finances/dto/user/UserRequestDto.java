@@ -1,6 +1,6 @@
-package com.jpcchaves.finances.dto.usuario;
+package com.jpcchaves.finances.dto.user;
 
-public class UsuarioRequestDto {
+public class UserRequestDto {
     private String nome;
     private String email;
     private String senha;
