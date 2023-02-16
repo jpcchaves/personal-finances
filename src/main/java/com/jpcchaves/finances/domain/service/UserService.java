@@ -8,6 +8,7 @@ import com.jpcchaves.finances.dto.user.UserResponseDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,18 +52,25 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
 
     @Override
     public UserResponseDto update(Long id, UserRequestDto dto) {
-        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id));
+        var entity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id));
+
         User user = mapper.map(dto, User.class);
         // todo: encrypt user's password
-
         user.setId(id);
+        user.setInactivationDate(entity.getInactivationDate());
+        
         userRepository.save(user);
         return mapper.map(user, UserResponseDto.class);
     }
 
     @Override
     public void delete(Long id) {
-        findById(id);
-        userRepository.deleteById(id);
+
+        var entity = findById(id);
+
+        var user = mapper.map(entity, User.class);
+        user.setInactivationDate(new Date());
+
+        userRepository.save(user);
     }
 }
