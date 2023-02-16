@@ -1,6 +1,6 @@
 package com.jpcchaves.finances.domain.service;
 
-import com.jpcchaves.finances.domain.model.Usuario;
+import com.jpcchaves.finances.domain.model.User;
 import com.jpcchaves.finances.domain.repository.UsuarioRepository;
 import com.jpcchaves.finances.dto.usuario.UsuarioRequestDto;
 import com.jpcchaves.finances.dto.usuario.UsuarioResponseDto;
@@ -21,17 +21,17 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDto, UsuarioRe
     @Override
     public List<UsuarioResponseDto> obterTodos() {
 
-        List<Usuario> usuarios = usuarioRepository.findAll();
+        List<User> users = usuarioRepository.findAll();
 
-        return usuarios
+        return users
                 .stream()
-                .map(usuario -> mapper.map(usuario, UsuarioResponseDto.class))
+                .map(user -> mapper.map(user, UsuarioResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public UsuarioResponseDto obterPorId(Long id) {
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        Optional<User> optUsuario = usuarioRepository.findById(id);
 
         if(optUsuario.isEmpty()){
             //throw

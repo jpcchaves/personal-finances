@@ -9,25 +9,26 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Usuario implements UserDetails {
+@Table(name = "_user")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUsuario")
+    @Column(name = "idUser")
     private Long id;
-    private String nome;
+    private String name;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
     @Column(columnDefinition = "TEXT")
-    private String foto;
+    private String photo;
     @Column(nullable = false)
-    private Date dataCriacao;
-    private Date dataInativacao;
+    private Date createdAt;
+    private Date inactivationDate;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "_user")
     private List<Titulo> titulos;
 
     public Long getId() {
@@ -38,12 +39,12 @@ public class Usuario implements UserDetails {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -54,44 +55,37 @@ public class Usuario implements UserDetails {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getFto() {
-        return foto;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setFto(String foto) {
-        this.foto = foto;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getDataCriacao() {
-        return dataCriacao;
+    public Date getInactivationDate() {
+        return inactivationDate;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Date getDataInativacao() {
-        return dataInativacao;
-    }
-
-    public void setDataInativacao(Date dataInativacao) {
-        this.dataInativacao = dataInativacao;
+    public void setInactivationDate(Date inactivationDate) {
+        this.inactivationDate = inactivationDate;
     }
 
     public List<Titulo> getTitulos() {
@@ -99,20 +93,14 @@ public class Usuario implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
     public String getPassword() {
-        return senha;
+        return password;
     }
 
     @Override
     public String getUsername() {
         return email;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

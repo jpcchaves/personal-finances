@@ -21,7 +21,7 @@ public class CentroDeCusto {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario")
-    private Usuario usuario;
+    private User user;
 
     @ManyToMany(mappedBy = "centrodecusto")
     @JsonBackReference
@@ -51,12 +51,12 @@ public class CentroDeCusto {
         this.observacao = observacao;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public User getUsuario() {
+        return user;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(User user) {
+        this.user = user;
     }
 
     public List<Titulo> getTitulos() {
