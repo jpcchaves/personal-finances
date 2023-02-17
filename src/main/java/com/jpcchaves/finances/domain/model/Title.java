@@ -2,44 +2,43 @@ package com.jpcchaves.finances.domain.model;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+import java.util.List;
+
 @Entity
 public class Title {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idTitulo")
+    @Column(name = "idTitle")
     private Long id;
 
     @Column(nullable = false)
-    private String descricao;
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "idUsuario")
-    private Usuario usuario;
+    @JoinColumn(name = "idUser")
+    private User user;
 
-    private ETipoTitulo tipo;
-
+//    private ETipoTitulo tipo;
 
     @ManyToMany
     @JoinTable(
-            name = "titulo_centrodecusto",
-            joinColumns = @JoinColumn(name = "idTitulo"),
-            inverseJoinColumns = @JoinColumn(name = "idCentroDeCusto")
+            name = "title_costcenter",
+            joinColumns = @JoinColumn(name = "idTitle"),
+            inverseJoinColumns = @JoinColumn(name = "idCostcenter")
     )
-    private List<CentroDeCusto> centrosDeCustos;
+    private List<CostCenter> costcenter;
 
-    @Column(nullable = false)
-    private Double valor;
+    private Date createdAt;
 
-    private Date dataCadastro;
+    private Date referenceDate;
 
-    private Date dataReferencia;
+    private Date expirationDate;
 
-    private Date dataVencimento;
-
-    private Date dataPagamento;
+    private Date paymentDate;
 
     @Column(columnDefinition = "TEXT")
-    private String observacao;
+    private String note;
 
 
 }

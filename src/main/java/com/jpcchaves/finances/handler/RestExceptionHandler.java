@@ -32,7 +32,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(ResourceBadRequestException.class)
     public ResponseEntity<ErrorResponse> handleResourceBadRequestException(ResourceBadRequestException ex) {
 
         String timestamp = DataConverter.convertDateToString(new Date());
