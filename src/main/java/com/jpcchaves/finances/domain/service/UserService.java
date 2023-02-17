@@ -1,5 +1,6 @@
 package com.jpcchaves.finances.domain.service;
 
+import com.jpcchaves.finances.domain.exception.ResourceBadRequestException;
 import com.jpcchaves.finances.domain.exception.ResourceNotFoundException;
 import com.jpcchaves.finances.domain.model.User;
 import com.jpcchaves.finances.domain.repository.UserRepository;
@@ -43,6 +44,12 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
 
     @Override
     public UserResponseDto create(UserRequestDto dto) {
+
+        var entity = userRepository.findByEmail(dto.getEmail());
+
+        if(entity != null) {
+            throw new ResourceBadRequestException("Já existe uma conta criada com o e-mail informado: " + dto.getEmail());
+        }
 
         User user = mapper.map(dto, User.class);
         user.setId(null);
