@@ -77,10 +77,12 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
     @Override
     public void delete(Long id) {
 
-        var entity = findById(id);
+        User entity = userRepository.findById(id)
+                                    .orElseThrow(() -> new ResourceNotFoundException("Não foi possível deletar o usuário pois o ID informado não exist: " + id));
 
         var user = mapper.map(entity, User.class);
         user.setInactivationDate(new Date());
+
 
         userRepository.save(user);
     }
