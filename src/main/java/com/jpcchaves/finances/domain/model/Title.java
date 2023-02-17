@@ -1,5 +1,6 @@
 package com.jpcchaves.finances.domain.model;
 
+import com.jpcchaves.finances.domain.Enum.ETitleType;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ public class Title {
     @JoinColumn(name = "idUser")
     private User user;
 
-//    private ETipoTitulo tipo;
+    private ETitleType type;
 
     @ManyToMany
     @JoinTable(
@@ -28,6 +29,9 @@ public class Title {
             inverseJoinColumns = @JoinColumn(name = "idCostcenter")
     )
     private List<CostCenter> costcenter;
+
+    @Column(nullable = false)
+    private Double amount;
 
     private Date createdAt;
 
@@ -39,6 +43,8 @@ public class Title {
 
     @Column(columnDefinition = "TEXT")
     private String note;
+
+
 
 
 }

@@ -35,7 +35,6 @@ public class CostCenter {
         this.id = id;
     }
 
-
     public String getDescription() {
         return description;
     }

@@ -28,7 +28,7 @@ public class User {
     private Date createdAt;
     private Date inactivationDate;
 
-    @OneToMany(mappedBy = "tb_user")
+    @OneToMany(mappedBy = "user")
     private List<Title> titles;
 
     public Long getId() {

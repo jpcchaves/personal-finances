@@ -46,6 +46,7 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
 
         User user = mapper.map(dto, User.class);
         user.setId(null);
+        user.setCreatedAt(new Date());
         userRepository.save(user);
 
         return mapper.map(user, UserResponseDto.class);

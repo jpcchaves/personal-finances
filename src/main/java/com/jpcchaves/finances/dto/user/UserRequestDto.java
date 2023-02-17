@@ -10,8 +10,8 @@ public class UserRequestDto {
     @Email(message = "Insira um email válido!")
     private String email;
     @NotBlank(message = "A senha é obrigatória!")
-    @Length(min = 6, message = "A senha deve ter no mínimo 6 caraceres.")
-    @Length(max = 15, message = "A senha deve ter no máximo 15 caraceres.")
+    @Length(min = 6, message = "A senha deve ter no mínimo 6 caracteres.")
+    @Length(max = 15, message = "A senha deve ter no máximo 15 caracteres.")
     private String password;
     private String photo;
 
