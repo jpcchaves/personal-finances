@@ -8,6 +8,7 @@ public class UserResponseDto {
     private String email;
     private String photo;
     private Date inactivationDate;
+    private Date createdAt;
 
     public Long getId() {
         return id;
@@ -47,5 +48,13 @@ public class UserResponseDto {
 
     public void setInactivationDate(Date inactivationDate) {
         this.inactivationDate = inactivationDate;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

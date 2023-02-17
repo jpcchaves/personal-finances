@@ -68,6 +68,7 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
         // todo: encrypt user's password
         user.setId(id);
         user.setInactivationDate(entity.getInactivationDate());
+        user.setCreatedAt(entity.getCreatedAt());
         
         userRepository.save(user);
         return mapper.map(user, UserResponseDto.class);
