@@ -1,6 +1,7 @@
 package com.jpcchaves.finances.security;
 
 import com.jpcchaves.finances.domain.model.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +44,24 @@ public class JwtUtil {
             System.out.println(e.getMessage());
             return "";
         }
+    }
+
+    private Claims getClaims(String token) {
+
+        try {
+
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(generateKey(jwtSecret))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
 
     }
 
