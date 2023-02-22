@@ -33,8 +33,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
     private JwtUtil jwtUtil;
-    @Autowired
-    private ModelMapper mapper;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         super();
@@ -67,7 +65,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         User user = (User) authResult.getPrincipal();
         String token = jwtUtil.generateToken(authResult);
 
-        UserResponseDto userResponseDto = mapper.map(user, UserResponseDto.class);
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setId(user.getId());
+        userResponseDto.setName(user.getName());
+        userResponseDto.setEmail(user.getEmail());
+        userResponseDto.setPhoto(user.getPhoto());
+        userResponseDto.setInactivationDate(user.getInactivationDate());
+        userResponseDto.setCreatedAt(user.getCreatedAt());
 
         LoginResponseDto loginResponseDto = new LoginResponseDto();
         loginResponseDto.setToken("Bearer: " + token);

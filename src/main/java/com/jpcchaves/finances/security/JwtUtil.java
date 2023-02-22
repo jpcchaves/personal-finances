@@ -21,7 +21,7 @@ public class JwtUtil {
     @Value("${auth.jwt-expiration-milliseconds}")
     private Long jwtExpirationMilliseconds;
 
-    public Date generateExpirationDate (Long expiration) {
+    public Date generateExpirationDate(Long expiration) {
         return new Date(new Date().getTime() + expiration);
     }
 
@@ -69,17 +69,17 @@ public class JwtUtil {
 
         Claims claims = getClaims(token);
 
-        if(claims == null) {
+        if (claims == null) {
             return null;
         }
 
         return claims.getSubject();
     }
 
-    public boolean  isTokenValid (String token) {
+    public boolean isTokenValid(String token) {
         Claims claims = getClaims(token);
 
-        if(claims == null) {
+        if (claims == null) {
             return false;
         }
 
@@ -87,8 +87,8 @@ public class JwtUtil {
         Date expirationDate = claims.getExpiration();
         Date timestamp = new Date(System.currentTimeMillis());
 
-        if (email != null && expirationDate.before(timestamp)){
-             return true;
+        if (email != null && timestamp.before(expirationDate)) {
+            return true;
         }
 
         return false;
