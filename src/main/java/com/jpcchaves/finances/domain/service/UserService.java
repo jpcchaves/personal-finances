@@ -42,12 +42,22 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
         return mapper.map(entity, UserResponseDto.class);
     }
 
+    public UserResponseDto findByEmail(String email) {
+        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
+
+        if (optionalUser.isEmpty()) {
+            throw new ResourceNotFoundException("Não foi possível encontrar o usuário com o email: " + email);
+        }
+
+        return mapper.map(optionalUser.get(), UserResponseDto.class);
+    }
+
     @Override
     public UserResponseDto create(UserRequestDto dto) {
 
         var entity = userRepository.findByEmail(dto.getEmail());
 
-        if(entity != null) {
+        if (entity != null) {
             throw new ResourceBadRequestException("Já existe uma conta criada com o e-mail informado: " + dto.getEmail());
         }
 
@@ -69,7 +79,7 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
         user.setId(id);
         user.setInactivationDate(entity.getInactivationDate());
         user.setCreatedAt(entity.getCreatedAt());
-        
+
         userRepository.save(user);
         return mapper.map(user, UserResponseDto.class);
     }
@@ -78,7 +88,7 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
     public void delete(Long id) {
 
         User entity = userRepository.findById(id)
-                                    .orElseThrow(() -> new ResourceNotFoundException("Não foi possível deletar o usuário pois o ID informado não exist: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Não foi possível deletar o usuário pois o ID informado não exist: " + id));
 
         var user = mapper.map(entity, User.class);
         user.setInactivationDate(new Date());
