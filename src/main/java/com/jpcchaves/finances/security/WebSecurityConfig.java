@@ -21,6 +21,9 @@ public class WebSecurityConfig {
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
 
+    @Autowired
+    private UserDetailsSecurityServer userDetailsSecurityServer;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -47,7 +50,7 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilter(new JwtAuthenticationFilter(getAuthenticationManager(authenticationConfiguration), jwtUtil));
-        http.addFilter(new JwtAuthorizationFilter(getAuthenticationManager(authenticationConfiguration), jwtUtil));
+        http.addFilter(new JwtAuthorizationFilter(getAuthenticationManager(authenticationConfiguration), jwtUtil, userDetailsSecurityServer));
 
         return http.build();
     }

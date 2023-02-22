@@ -1,13 +1,10 @@
 package com.jpcchaves.finances.security;
 
 import com.jpcchaves.finances.domain.model.User;
-import com.jpcchaves.finances.domain.service.UserService;
-import com.jpcchaves.finances.dto.user.UserResponseDto;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,14 +17,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserService userService;
+    private UserDetailsSecurityServer userDetailsSecurityServer;
 
-    @Autowired
-    private ModelMapper mapper;
-
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserDetailsSecurityServer userDetailsSecurity) {
         super(authenticationManager);
         this.jwtUtil = jwtUtil;
+        this.userDetailsSecurityServer = userDetailsSecurity;
     }
 
     @Override
@@ -46,11 +41,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         if (jwtUtil.isTokenValid(token)) {
+
             String email = jwtUtil.getUserName(token);
-            UserResponseDto userResponseDto = userService.findByEmail(email);
 
-            var user = mapper.map(userResponseDto, User.class);
-
+            User user = (User) userDetailsSecurityServer.loadUserByUsername(email);
             return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         }
 
