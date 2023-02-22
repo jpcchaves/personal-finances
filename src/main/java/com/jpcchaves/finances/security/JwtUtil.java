@@ -65,7 +65,7 @@ public class JwtUtil {
 
     }
 
-    private String getUserName(String token) {
+    public String getUserName(String token) {
 
         Claims claims = getClaims(token);
 
@@ -74,6 +74,23 @@ public class JwtUtil {
         }
 
         return claims.getSubject();
+    }
 
+    public boolean  isTokenValid (String token) {
+        Claims claims = getClaims(token);
+
+        if(claims == null) {
+            return false;
+        }
+
+        String email = claims.getSubject();
+        Date expirationDate = claims.getExpiration();
+        Date timestamp = new Date(System.currentTimeMillis());
+
+        if (email != null && expirationDate.before(timestamp)){
+             return true;
+        }
+
+        return false;
     }
 }
