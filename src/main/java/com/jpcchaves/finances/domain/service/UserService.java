@@ -8,6 +8,8 @@ import com.jpcchaves.finances.dto.user.UserRequestDto;
 import com.jpcchaves.finances.dto.user.UserResponseDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,6 +25,9 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<UserResponseDto> findAll() {
@@ -62,12 +67,16 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
         }
 
         User user = mapper.map(dto, User.class);
+
+        // encryption
+        String password = passwordEncoder.encode(user.getPassword());
+        user.setPassword(password);
+
         user.setId(null);
         user.setCreatedAt(new Date());
         userRepository.save(user);
 
         return mapper.map(user, UserResponseDto.class);
-        // todo: encrypt user's password
     }
 
     @Override
@@ -75,7 +84,11 @@ public class UserService implements ICRUDService<UserRequestDto, UserResponseDto
         var entity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id));
 
         User user = mapper.map(dto, User.class);
-        // todo: encrypt user's password
+
+        // encryption
+        var password = passwordEncoder.encode(user.getPassword());
+        user.setPassword(password);
+
         user.setId(id);
         user.setInactivationDate(entity.getInactivationDate());
         user.setCreatedAt(entity.getCreatedAt());
