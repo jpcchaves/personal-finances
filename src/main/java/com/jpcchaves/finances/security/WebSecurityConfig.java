@@ -10,7 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -18,9 +20,9 @@ public class WebSecurityConfig {
 
     @Autowired
     private JwtUtil jwtUtil;
+
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
-
     @Autowired
     private UserDetailsSecurityServer userDetailsSecurityServer;
 
@@ -34,7 +36,21 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new CustomAuthenticationEntryPoint();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .accessDeniedHandler(accessDeniedHandler());
+
         http.headers()
                 .frameOptions()
                 .disable()
@@ -44,15 +60,22 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests((auth) ->
-                        auth.requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                                .anyRequest().authenticated())
+                        auth.requestMatchers(HttpMethod.POST,
+                                        "/api/v1/users")
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
+                                .and()
+                )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
         http.addFilter(new JwtAuthenticationFilter(getAuthenticationManager(authenticationConfiguration), jwtUtil));
         http.addFilter(new JwtAuthorizationFilter(getAuthenticationManager(authenticationConfiguration), jwtUtil, userDetailsSecurityServer));
 
         return http.build();
     }
+
 
 }
