@@ -1,2 +1,4 @@
-package com.jpcchaves.finances.dto.costcenter;public class CostCenterResponseDto {
+package com.jpcchaves.finances.dto.costcenter;
+
+public class CostCenterResponseDto extends CostCenterRequestDto {
 }
