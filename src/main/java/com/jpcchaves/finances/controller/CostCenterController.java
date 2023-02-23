@@ -46,5 +46,9 @@ public class CostCenterController {
                 .body(costCenterService.update(id, dto));
     }
 
-
+    @DeleteMapping("/${id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        costCenterService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
