@@ -7,7 +7,7 @@ public class CostCenterRequestDto {
     private Long id;
     @NotBlank(message = "A descrição é obrigatória!")
     private String description;
-    private String notes;
+    private String note;
 
     public Long getId() {
         return id;
@@ -25,11 +25,11 @@ public class CostCenterRequestDto {
         this.description = description;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getNote() {
+        return note;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNote(String note) {
+        this.note = note;
     }
 }
