@@ -1,8 +1,11 @@
 package com.jpcchaves.finances.dto.costcenter;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CostCenterRequestDto {
 
     private Long id;
+    @NotBlank(message = "A descrição é obrigatória!")
     private String description;
     private String notes;
 

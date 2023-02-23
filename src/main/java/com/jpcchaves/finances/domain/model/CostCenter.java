@@ -14,6 +14,7 @@ public class CostCenter {
     private Long id;
 
     @Column(nullable = false)
+
     private String description;
 
     @Column(columnDefinition = "TEXT")

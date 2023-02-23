@@ -1,7 +1,14 @@
 package com.jpcchaves.finances.dto.user;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class LoginRequestDto {
+
+    @NotBlank(message = "O email é obrigatório!")
+    @Email(message = "Insira um email válido!")
     private String email;
+    @NotBlank(message = "A senha é obrigatória!")
     private String password;
 
     public String getEmail() {
