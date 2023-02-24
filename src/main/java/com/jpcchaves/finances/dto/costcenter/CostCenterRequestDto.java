@@ -1,5 +1,6 @@
 package com.jpcchaves.finances.dto.costcenter;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.validation.constraints.NotBlank;
 
 public class CostCenterRequestDto {

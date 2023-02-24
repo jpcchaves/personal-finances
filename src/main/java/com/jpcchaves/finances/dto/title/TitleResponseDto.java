@@ -1,12 +1,16 @@
 package com.jpcchaves.finances.dto.title;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.jpcchaves.finances.domain.Enum.ETitleType;
 import com.jpcchaves.finances.dto.costcenter.CostCenterRequestDto;
 import com.jpcchaves.finances.dto.costcenter.CostCenterResponseDto;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.util.Date;
 import java.util.List;
 
+@JsonPropertyOrder({"id", "description", "type", "note", "amount", "createdAt", "referenceDate", "expirationDate", "paymentDate", "costcenter"})
 public class TitleResponseDto {
     private Long id;
     private String description;

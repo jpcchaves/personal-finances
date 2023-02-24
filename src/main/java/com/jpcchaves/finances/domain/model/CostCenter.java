@@ -64,4 +64,8 @@ public class CostCenter {
         return titles;
     }
 
+    public void setTitles(List<Title> titles) {
+        this.titles = titles;
+    }
+
 }

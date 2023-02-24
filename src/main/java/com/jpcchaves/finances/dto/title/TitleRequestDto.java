@@ -1,28 +1,34 @@
 package com.jpcchaves.finances.dto.title;
 
 import com.jpcchaves.finances.domain.Enum.ETitleType;
-import com.jpcchaves.finances.domain.model.CostCenter;
 import com.jpcchaves.finances.dto.costcenter.CostCenterRequestDto;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.List;
+
 
 public class TitleRequestDto {
     private Long id;
     @NotBlank(message = "A descrição é obrigatória!")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @NotBlank(message = "O tipo é obrigatório!")
     private ETitleType type;
     private List<CostCenterRequestDto> costcenter;
 
-    @NotBlank(message = "O valor é obrigatório!")
+    @DecimalMin(message = "O valor é obrigatório!", value = "0")
     private Double amount;
     private Date createdAt;
 
     private Date referenceDate;
 
-    @NotBlank(message = "A data de expiração é obrigatória!")
+    @NotNull(message = "A data de expiração é obrigatória!")
     private Date expirationDate;
 
     private Date paymentDate;

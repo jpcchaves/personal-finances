@@ -9,10 +9,13 @@ import com.jpcchaves.finances.dto.title.TitleResponseDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class TitleService implements ICRUDService<TitleRequestDto, TitleResponseDto> {
 
 
@@ -45,6 +48,7 @@ public class TitleService implements ICRUDService<TitleRequestDto, TitleResponse
 
         title.setUser(user);
         title.setId(null);
+        title.setCreatedAt(new Date());
 
         title = titleRepository.save(title);
 
