@@ -75,4 +75,14 @@ public class TitleService implements ICRUDService<TitleRequestDto, TitleResponse
         findById(id);
         titleRepository.deleteById(id);
     }
+
+    public List<TitleResponseDto> findByExpirationDate(String initialDate, String finalDate) {
+
+        List<Title> titles = titleRepository.findByExpirationDate(initialDate, finalDate);
+
+        return titles.stream()
+                .map(title -> mapper.map(title, TitleResponseDto.class))
+                .collect(Collectors.toList());
+
+    }
 }
