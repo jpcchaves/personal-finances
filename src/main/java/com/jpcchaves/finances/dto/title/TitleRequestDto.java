@@ -17,8 +17,6 @@ public class TitleRequestDto {
     @NotBlank(message = "A descrição é obrigatória!")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @NotBlank(message = "O tipo é obrigatório!")
     private ETitleType type;
     private List<CostCenterRequestDto> costcenter;
 

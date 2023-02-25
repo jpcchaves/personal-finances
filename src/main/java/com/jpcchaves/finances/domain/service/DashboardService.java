@@ -3,6 +3,7 @@ package com.jpcchaves.finances.domain.service;
 import com.jpcchaves.finances.domain.Enum.ETitleType;
 import com.jpcchaves.finances.dto.dashboard.DashboardResponseDto;
 import com.jpcchaves.finances.dto.title.TitleResponseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Service
 public class DashboardService {
-
+    @Autowired
     private TitleService titleService;
 
     public DashboardResponseDto getCashFlow(String inititalDate, String finalDate) {
@@ -29,7 +30,7 @@ public class DashboardService {
                 payingTitles.add(title);
             }
             else {
-                amountToPay += title.getAmount();
+                amountToReceive  += title.getAmount();
                 receivingTitles.add(title);
             }
         }
