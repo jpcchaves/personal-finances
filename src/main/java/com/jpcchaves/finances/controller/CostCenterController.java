@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class CostCenterController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Finds all costcenters", description = "Finds all costcenters related to the current logged user",
             tags = {"CostCenter"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -50,6 +52,7 @@ public class CostCenterController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Finds a costcenter", description = "Finds a costcenter related to the current logged user",
             tags = {"CostCenter"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -72,6 +75,7 @@ public class CostCenterController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Creates a costcenter", description = "Creates a costcenter related to the current logged user",
             tags = {"CostCenter"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -95,6 +99,7 @@ public class CostCenterController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Updates a costcenter", description = "Updates a costcenter related to the current logged user",
             tags = {"CostCenter"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -118,6 +123,7 @@ public class CostCenterController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes a costcenter", description = "Deletes a costcenter related to the current logged user",
             tags = {"CostCenter"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),

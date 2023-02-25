@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class UserController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Finds all users", description = "Finds all users",
             tags = {"Users"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -51,6 +53,7 @@ public class UserController {
     @GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Finds an user", description = "Finds an user",
             tags = {"Users"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -94,6 +97,7 @@ public class UserController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Updates an user", description = "Updates an user",
             tags = {"Users"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -118,6 +122,7 @@ public class UserController {
     @Operation(summary = "Deletes an user",
             description = "Logical deletes an user by passing his ID (the user is not going to be removed from the DB but set an inactivation date)",
             tags = {"Users"},
+            security = {@SecurityRequirement(name = "bearer-key")},
             responses = {
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
