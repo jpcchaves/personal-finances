@@ -114,7 +114,7 @@ public class UserController {
                 .body(userService.update(id, dto));
     }
 
-    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}")
     @Operation(summary = "Deletes an user",
             description = "Logical deletes an user by passing his ID (the user is not going to be removed from the DB but set an inactivation date)",
             tags = {"Users"},
