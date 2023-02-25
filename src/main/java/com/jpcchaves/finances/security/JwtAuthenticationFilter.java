@@ -1,7 +1,5 @@
 package com.jpcchaves.finances.security;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.jpcchaves.finances.common.DataConverter;
@@ -14,10 +12,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -41,15 +36,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         setFilterProcessesUrl("/api/v1/auth");
     }
-
+    
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             LoginRequestDto loginRequest = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
 
-            Authentication auth = authenticationManager.authenticate(authToken);
-            return auth;
+            return authenticationManager.authenticate(authToken);
         } catch (BadCredentialsException e) {
             throw new BadCredentialsException("Usuário ou senha inválidos!");
         } catch (Exception e) {

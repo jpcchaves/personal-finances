@@ -65,7 +65,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests((auth) ->
                         auth.requestMatchers(HttpMethod.POST,
-                                        "/api/v1/users")
+                                        "/api/v1/users", "/api/v1/auth")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
