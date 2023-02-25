@@ -59,6 +59,10 @@ public class WebSecurityConfig {
                 .and()
                 .csrf()
                 .disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+                .permitAll()
+                .and()
                 .authorizeHttpRequests((auth) ->
                         auth.requestMatchers(HttpMethod.POST,
                                         "/api/v1/users")
