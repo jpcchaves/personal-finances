@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,9 @@ public class TitleService implements ICRUDService<TitleRequestDto, TitleResponse
 
     @Override
     public List<TitleResponseDto> findAll() {
-        List<Title> titles = titleRepository.findAll();
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Title> titles = titleRepository.findByUser(user);
 
         return titles.stream()
                 .map(title -> mapper.map(title, TitleResponseDto.class))
@@ -37,6 +40,11 @@ public class TitleService implements ICRUDService<TitleRequestDto, TitleResponse
     @Override
     public TitleResponseDto findById(Long id) {
         var entity = titleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado um título com o id: " + id));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(!Objects.equals(entity.getUser().getId(), user.getId())) {
+            throw new ResourceNotFoundException("Não foi encontrado um título com o id: " + id);
+        }
 
         return mapper.map(entity, TitleResponseDto.class);
     }

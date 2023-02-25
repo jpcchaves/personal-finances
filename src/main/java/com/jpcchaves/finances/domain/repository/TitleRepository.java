@@ -1,6 +1,7 @@
 package com.jpcchaves.finances.domain.repository;
 
 import com.jpcchaves.finances.domain.model.Title;
+import com.jpcchaves.finances.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,6 @@ public interface TitleRepository extends JpaRepository<Title, Long> {
                     "TO_TIMESTAMP(:finalDate, 'YYYY-MM-DD hh24:MI:SS')"
     )
     List<Title> findByExpirationDate(@Param("initialDate") String initialDate, @Param("finalDate") String finalDate);
+
+    List<Title> findByUser(User user);
 }

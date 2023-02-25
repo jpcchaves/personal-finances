@@ -1,9 +1,11 @@
 package com.jpcchaves.finances.domain.service;
 
 import com.jpcchaves.finances.domain.Enum.ETitleType;
+import com.jpcchaves.finances.domain.model.User;
 import com.jpcchaves.finances.dto.dashboard.DashboardResponseDto;
 import com.jpcchaves.finances.dto.title.TitleResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class DashboardService {
 
     public DashboardResponseDto getCashFlow(String inititalDate, String finalDate) {
         List<TitleResponseDto> titles = titleService.findByExpirationDate(inititalDate, finalDate);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 
         Double amountToPay = 0.0;
         Double amountToReceive = 0.0;

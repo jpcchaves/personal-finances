@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,10 @@ public class CostCenterService implements ICRUDService<CostCenterRequestDto, Cos
 
     @Override
     public List<CostCenterResponseDto> findAll() {
-        List<CostCenter> costCenterList = costCenterRepository.findAll();
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<CostCenter> costCenterList = costCenterRepository.findByUser(user);
 
         return costCenterList
                 .stream()
@@ -36,6 +40,11 @@ public class CostCenterService implements ICRUDService<CostCenterRequestDto, Cos
     @Override
     public CostCenterResponseDto findById(Long id) {
         var entity = costCenterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar um centro de custo com o id informado: " + id));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(!Objects.equals(entity.getUser().getId(), user.getId())) {
+            throw new ResourceNotFoundException("Não foi encontrado um título com o id: " + id);
+        }
 
         return mapper.map(entity, CostCenterResponseDto.class);
     }
