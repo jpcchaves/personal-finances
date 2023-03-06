@@ -9,6 +9,7 @@ public class UserResponseDto {
     private String photo;
     private Date inactivationDate;
     private Date createdAt;
+    private String role;
 
     public Long getId() {
         return id;
@@ -56,5 +57,13 @@ public class UserResponseDto {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

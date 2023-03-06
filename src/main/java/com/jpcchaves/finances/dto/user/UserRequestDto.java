@@ -14,6 +14,7 @@ public class UserRequestDto {
     @Length(max = 15, message = "A senha deve ter no máximo 15 caracteres.")
     private String password;
     private String photo;
+    private String role;
 
     public String getName() {
         return name;
@@ -45,5 +46,13 @@ public class UserRequestDto {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

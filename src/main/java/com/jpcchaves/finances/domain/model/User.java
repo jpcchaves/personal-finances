@@ -2,11 +2,14 @@ package com.jpcchaves.finances.domain.model;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+;
 
 @Entity
 @Table(name = "tb_user")
@@ -21,6 +24,9 @@ public class User implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String role;
 
     @Column(columnDefinition = "TEXT")
     private String photo;
@@ -55,10 +61,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPhoto() {
         return photo;
     }
@@ -87,14 +89,30 @@ public class User implements UserDetails {
         return titles;
     }
 
+    public void setTitles(List<Title> titles) {
+        this.titles = titles;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
